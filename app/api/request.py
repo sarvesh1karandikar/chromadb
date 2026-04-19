@@ -2,7 +2,8 @@ from dataclasses import dataclass,field
 from typing import Any,List,Optional
 from enum import Enum
 import uuid
-import torch 
+import torch
+from pydantic import BaseModel
 
 def tensor_to_list(tensors: Optional[List[torch.Tensor]]) -> List:
     if not tensors:
@@ -99,6 +100,11 @@ class SearchDocument(BaseDocument):
 
 @dataclass
 class SearchRequest:
+    query: str
+    top_k_collections: int = 1
+    top_k_documents: int = 5
+
+class AskRequest(BaseModel):
     query: str
     top_k_collections: int = 1
     top_k_documents: int = 5
